@@ -63,11 +63,12 @@ const formatted_angka = (nZeroBook / 1000).toFixed(1); return formatted_angka.en
 
    // cari semua button like yg ada
   likes_btn_class_hr.forEach(function(likes_btn_hiru, dataLike) {
-    // ambil jumlah dari tombol "Like"
+    // ambil attribute dari tombol "Like"
    var websiteKu_hr = likes_btn_hiru.getAttribute('data-web')
    var postId_hr = likes_btn_hiru.getAttribute('data-id');
    var postUrl_hr = likes_btn_hiru.getAttribute('data-url');
    var postTitle_hr = likes_btn_hiru.getAttribute('data-title');
+    //parameter dataLike	  
    var tampilkan_likes_hr = lokasi_likes_ditampilakan_hr[dataLike];
 
 // ubah bagian 'click' menjadi load jika ingin merubah button like jadi view
@@ -97,7 +98,7 @@ const formatted_angka = (nZeroBook / 1000).toFixed(1); return formatted_angka.en
     });
    
 
-// baca jumlah "Likes" yg ada didatabase terus 
+// baca data Idpost "Likes" yg ada didatabase
 fetch(dbLike_hiru + `/likes_hiru/${websiteKu_hr}/${postId_hr}.json`)
       .then(function(response) {
         return response.json();
