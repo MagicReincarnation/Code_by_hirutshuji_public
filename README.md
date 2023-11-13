@@ -1,3 +1,4 @@
 # Code_by_hirutshuji_public
 
-dimohon jangan menjual kode ini karena ini gratis, bebas digunakan.
+bebasnya seperti Angin sepoi sepoi,
+yeah jika suka silahkan bebas digunakan.
