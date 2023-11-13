@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>button Like firebase</title>
+</head>
+<body>
+	iseng buat fitur ini karena terinspirasi dari resgane.
+	
+	
+<!-- Tombol "Likes" yg dipasang ditema, jangan lupa ganti zeistmaid.blogspot.com dengan website atau title websitenya aja zeistmaid-->
+<!--data yang bisa digunakan pada blogger
+<button data-web="zeistmaid" class="button_likes_hiru" expr:data-id='data:post.id' expr:data-url='data:post.url' expr:data-title='data:post.title'>like<span class="likes_ditampilkan_hiru">0</span></button>-->
+
+
+
+
+<!-- Tombol "Like" pertama -->
+<button data-web="zeistmaid" data-id="1" data-url="zero.com" data-title="testlike" class="button_likes_hiru">Likes <span class="likes_ditampilkan_hiru">0</span></button> 
+
+
+<!-- Tombol "Like" kedua -->
+<button data-web="zeistmaid" data-id="2" data-url="https://hiru.blogspot.com" data-title="testlike" class="button_likes_hiru">Likes <span class="likes_ditampilkan_hiru">0</span></button>
+
+  
+<!--  folder database yg dihasilkan
+-zeistmaid
+---- Id dari Postingan 
+------[
+  idpost:28296369292,
+  title: judul postingan,
+  url: url postingan series/Chapter,
+  web: zeistmaid,
+  like: 11000 //ini jumlah like 
+  ]
+  -->
+<script>
+	
+	  // URL Database Firebase
+  var dbLike_hiru = "https://hiru-af04f-default-rtdb.firebaseio.com"; 
+	
+  //  tombol "Like" dan tampilan jumlah like
+  var likes_btn_class_hr = document.querySelectorAll('.button_likes_hiru');
+  var lokasi_likes_ditampilakan_hr = document.querySelectorAll('.likes_ditampilkan_hiru');
+ 
+   if (dbLike_hiru) {
+ if (likes_btn_class_hr &&  lokasi_likes_ditampilakan_hr ) {
+//function convert jutaan, buatanku tetapi dimodif oleh resgane.
+function NFrtBookmark(nZeroBook) {
+if (nZeroBook === 0) {
+  return 0;
+ } else if (nZeroBook >= 1000000000) {    
+const formatted_angka = (nZeroBook / 1000000000).toFixed(1);    
+ return formatted_angka.endsWith('.0') ? formatted_angka.slice(0, -2) + 'M' : formatted_angka + 'M';  
+ } else if (nZeroBook >= 1000000) {
+ const formatted_angka = (nZeroBook / 1000000).toFixed(1);
+ return formatted_angka.endsWith('.0') ? formatted_angka.slice(0, -2) + 'JT' : formatted_angka + 'JT';  
+ } else if (nZeroBook >= 1000) {
+const formatted_angka = (nZeroBook / 1000).toFixed(1); return formatted_angka.endsWith('.0') ? formatted_angka.slice(0, -2) + 'K' : formatted_angka + 'K';  
+ } else {
+ return nZeroBook;
+ }
+}
+
+   // cari semua button like yg ada
+  likes_btn_class_hr.forEach(function(likes_btn_hiru, dataLike) {
+    // ambil jumlah dari tombol "Like"
+   var websiteKu_hr = likes_btn_hiru.getAttribute('data-web')
+   var postId_hr = likes_btn_hiru.getAttribute('data-id');
+   var postUrl_hr = likes_btn_hiru.getAttribute('data-url');
+   var postTitle_hr = likes_btn_hiru.getAttribute('data-title');
+   var tampilkan_likes_hr = lokasi_likes_ditampilakan_hr[dataLike];
+
+// ubah bagian 'click' menjadi load jika ingin merubah button like jadi view
+
+    likes_btn_hiru.addEventListener('click', function() {
+      var angka_like_hr = parseInt(tampilkan_likes_hr.textContent, 10) || 0;
+      angka_like_hr += 1; //tambah 1 tiap like
+      tampilkan_likes_hr.textContent = angka_like_hr;
+  //struktur data database realtime
+      var likeData = {
+        web: websiteKu_hr, 	
+        idpost: postId_hr,
+        url: postUrl_hr,
+        like: angka_like_hr,
+        title: postTitle_hr
+      };
+  
+//tulis data "likes", jujur header gak tau fungsinya buat apa.. soalnya kode bagian header ini dapat di stackoverflow.
+
+ fetch(dbLike_hiru + `/likes_hiru/${websiteKu_hr}/${postId_hr}.json`, {
+        method: 'PUT',
+        body: JSON.stringify(likeData),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+    });
+   
+
+// baca jumlah "Likes" yg ada didatabase terus 
+fetch(dbLike_hiru + `/likes_hiru/${websiteKu_hr}/${postId_hr}.json`)
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(data) {
+        var likeCount = 0;
+        if (data) {
+          angka_like_hr = data.like || 0; //default 0 
+        }
+tampilkan_likes_hr.textContent = NFrtBookmark(angka_like_hr);
+      })
+      .catch(function(error) {
+  console.error('button like Error:', error);
+      });
+  });
+  
+} else {
+console.log("error button like: class (.button_likes_hiru) dan class (.likes_ditampilkan_hiru) gak ada.");
+}
+} else {
+console.log("error button like: url database (dbLike_hiru) kosong atau error.");
+}
+</script>
+</body>
+</html>
