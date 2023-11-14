@@ -72,7 +72,7 @@ const formatted_angka = (nZeroBook / 1000).toFixed(1); return formatted_angka.en
     //parameter dataLike	  
    var tampilkan_likes_hr = lokasi_likes_ditampilakan_hr[dataLike];
 
-// ubah bagian 'click' menjadi load jika ingin merubah button like jadi view
+// ubah bagian addEventListener 'click' menjadi window load jika ingin merubah button like jadi view
 
     likes_btn_hiru.addEventListener('click', function() {
       var angka_like_hr = parseInt(tampilkan_likes_hr.textContent, 10) || 0;
