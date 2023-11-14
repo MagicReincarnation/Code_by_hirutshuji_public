@@ -73,22 +73,30 @@ const formatted_angka = (nZeroBook / 1000).toFixed(1); return formatted_angka.en
    var tampilkan_likes_hr = lokasi_likes_ditampilakan_hr[dataLike];
 
 // ubah bagian addEventListener 'click' menjadi window load jika ingin merubah button like jadi view
+likes_btn_hiru.addEventListener('click', function() {
+    // Ambil data "likes" dari db firebase
+    fetch(`${dbLike_hiru}/likes_hiru/${websiteKu_hr}/${postId_hr}.json`)
+      .then(response => response.json())
+      .then(data => {      
+      
+  var likes_saat_ini = data ? data.like || 0 : 0;
+      
+  var angka_like_hr = parseInt(tampilkan_likes_hr.textContent, 10) || 0;
+   angka_like_hr =  1;//angka bertambah Likes tiap diclick 
+   
+  var likes_hr = likes_saat_ini + angka_like_hr;
+  tampilkan_likes_hr.textContent =  likes_hr;   
 
-    likes_btn_hiru.addEventListener('click', function() {
-      var angka_like_hr = parseInt(tampilkan_likes_hr.textContent, 10) || 0;
-      angka_like_hr += 1; //tambah 1 tiap like
-      tampilkan_likes_hr.textContent = angka_like_hr;
-  //struktur data database realtime
-      var likeData = {
+  //struktur data realtime  
+  var likeData = {
         web: websiteKu_hr, 	
         idpost: postId_hr,
         url: postUrl_hr,
-        like: angka_like_hr,
+        like: likes_hr,
         title: postTitle_hr
       };
   
 //tulis data "likes", jujur header gak tau fungsinya buat apa.. soalnya kode bagian header ini dapat di stackoverflow.
-
  fetch(dbLike_hiru + `/likes_hiru/${websiteKu_hr}/${postId_hr}.json`, {
         method: 'PUT',
         body: JSON.stringify(likeData),
@@ -96,25 +104,27 @@ const formatted_angka = (nZeroBook / 1000).toFixed(1); return formatted_angka.en
           'Content-Type': 'application/json'
         }
       });
+       })
+      .catch(error => {
+        console.error('gagal update data likes:', error);
+      });
     });
    
 
-// baca data Idpost "Likes" yg ada didatabase
-fetch(dbLike_hiru + `/likes_hiru/${websiteKu_hr}/${postId_hr}.json`)
-      .then(function(response) {
-        return response.json();
-      })
-      .then(function(data) {
-        var likeCount = 0;
-        if (data) {
-          angka_like_hr = data.like || 0; //default 0 
+// baca jumlah "Likes" yg ada didatabase terus 
+fetch(`${dbLike_hiru}/likes_hiru/${websiteKu_hr}/${postId_hr}.json`)
+    .then(response => response.json())
+    .then(data => { 
+    var angka_like_hr = 0;
+    if (data) {
+   angka_like_hr = data.like || 0; //default 0 
         }
 tampilkan_likes_hr.textContent = NFrtBookmark(angka_like_hr);
-      })
-      .catch(function(error) {
-  console.error('button like Error:', error);
-      });
-  });
+    })
+    .catch(error => {
+      console.error('Error Update datanya: ', error);
+    });
+});
   
 } else {
 console.log("error button like: class (.button_likes_hiru) dan class (.likes_ditampilkan_hiru) gak ada.");
