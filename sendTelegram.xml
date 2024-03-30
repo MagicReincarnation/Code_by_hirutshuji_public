@@ -1,0 +1,47 @@
+  <input type="file" id="fileInput"/>
+        <label for="fileInput">Upload bukti transfer (ss/pdf):</label>
+  
+
+====== 
+run function
+
+runPesan() 
+
+======     
+
+function runPesan() {
+  var tgbtoken = "6427068077:xxxxxxxxxx"; //Ganti dengan token bot kamu
+  
+  var tbGroup = "-10xxxxxxxx"; //Id Group telegram
+
+  var file = document.getElementById("fileInput").files[0];
+
+  var pesan = "Yahooo min ada bug nih";// Pesan form
+
+  var xhr = new XMLHttpRequest();
+  var formData = new FormData();
+  formData.append("chat_id", tbGroup);
+
+  formData.append("caption", pesan); 
+/*Menggunakan "caption" untuk menyertakan pesan teks ke file jadi ini perlu file untuk bisa mengirimnya, yah... bisa dihapus juga wajibnya*/ 
+
+  if (file) {
+    formData.append("document", file);
+  } else {
+  
+    console.log("Silakan masukan ss/file bukti Bug terlebih dahulu!");
+   /*return; ini kumatikan dulu agar tanpa file bisa dikirim*/ 
+  }
+
+  console.log("Mengirim pesan");
+
+  var url = `https://api.telegram.org/bot${tgbtoken}/sendDocument`;
+
+  xhr.open("POST", url, true);
+  xhr.onreadystatechange = function() {
+if (xhr.readyState == 4 && xhr.status == 200) {
+      console.log("Pesan dengan file berhasil dikirim ke grup Telegram!");
+    }
+  };
+  xhr.send(formData);
+}
