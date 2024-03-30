@@ -1,0 +1,50 @@
+kode ini perlu file jadi harus ada input file, hapus aja kalau gak perlu file, ubah bootleannya
+
+  <input type="file" id="fileInput"/>
+        <label for="fileInput">Upload bukti transfer (ss/pdf):</label>
+  
+
+====== 
+run function
+
+kirimPesan() 
+
+======     
+
+function kirimPesan() {
+  var tgbtoken = "xxxxxx:xxxxxxx"; // Ganti dengan token bot kamu
+  var tbGroup = "-10xxxxxxxxx"; // Id Group telegram
+
+  var xhr = new XMLHttpRequest();
+  var formData = new FormData();
+  formData.append("chat_id", tbGroup);
+
+  var pesan = "Yahooo min ada bug nih"; // Pesan form
+  var tanpaFile = true;//bootlean wajib file atau tidak 
+  
+  if (!tanpaFile) {
+    var file = document.getElementById("fileInput").files[0];
+    if (file) {
+      formData.append("document", file);
+    } else {
+      console.log("Silakan masukan ss/file bukti Bug terlebih dahulu!");
+      return;
+    }
+    formData.append("caption", pesan);// menggunakan caption, jika ada filenya maka pesan dikirim sebagai caption file.
+    
+  } else {
+    formData.append("text", pesan); // Menggunakan "text" biasa untuk mengirim pesan teks tanpa file
+  }
+
+  console.log("Mengirim pesan");
+
+  var url = `https://api.telegram.org/bot${tgbtoken}/sendMessage`; // url api telegram
+
+  xhr.open("POST", url, true);
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState == 4 && xhr.status == 200) {
+      console.log("Pesan berhasil dikirim ke grup Telegram!");
+    }
+  };
+  xhr.send(formData);
+}
