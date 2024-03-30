@@ -30,8 +30,8 @@ function runPesan() {
   } else {
   
     console.log("Silakan masukan ss/file bukti Bug terlebih dahulu!");
-   /*return; ini kumatikan dulu agar tanpa file bisa dikirim*/ 
-  }
+   return;
+}
 
   console.log("Mengirim pesan");
 
