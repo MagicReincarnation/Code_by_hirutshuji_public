@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formulir</title>
+<link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  <script src="scriptv2.0.js"></script>
+</head>
+<body>
+
+<button class="btnbuy" id="clickBuy" onclick="clickPopupProduk()">Beli Via email/WA</button>
+ 
+<script>
+ var gmailKamu = "youremail@gmail.com";  // Ganti dengan email kamu.
+ 
+ var nomorKamu = "62895xxxxxxx";  // Ganti dengan nomor kamu pastikan 08 diganti jadi 62.
+ 
+ var token_bot_telegram = "xxxxxxx:xxxxxxxxx"; // Ganti dengan token bot kamu
+
+ var id_grup_telegram = "-xxxxxxxxxxx"; // Ganti dengan id group kamu
+ 
+ var payVia = {
+       ovo: {
+            gambar: "link",
+            html: "Belum tersedia"
+        },
+        gopay: {
+            gambar: "link",
+            html: "Belum tersedia"
+        },
+        dana: {
+            gambar: "link",
+            html: "<p>Silakan transfer ke nomor Dana kami: 081234567890</p><p>dan kirimkan invoice pembayarannya  Via WA/Email</p>"
+        },
+        paypal: {
+            gambar: "link",
+            html: "<p>Silakan transfer ke akun PayPal kami: example@example.com</p><p>dan kirimkan invoice pembayarannya  Via WA/Email</p>"
+        },
+        trakteer: {
+            gambar: "link",
+            html: "<p>Silakan kunjungi link Trakteer kami: www.trakteer.com/example</p><p>dan kirimkan invoice pembayarannya  Via WA/Email</p>"
+        },
+        whatsApp: {
+      gambar: "link",
+      html: "<p>Setelah Mengirim Pesan Ke WA kirim juga invoice.</p>"
+        },
+       email: {
+      gambar: "link",
+     html: "<p>sertakan invoice saat Mengirim Pesan ke email.</p>"
+        },
+    telegram: {
+      gambar: "telegram",
+     html: "<p>sertakan invoice saat Mengirim Pesan ke Telegram (wajib).</p>"
+        }
+    };
+
+
+  // Data array produk dengan kunci unik
+var produk = {
+  "1": {
+    gambarproduk: {
+      url: "https://w7.pngwing.com/pngs/624/612/png-transparent-blend-s-anime-manga-anime-child-face-black-hair-thumbnail.png"
+    },
+    produk: {
+      nama: "Sepatu"
+    },
+    harga: {
+      Rp: "30.000",
+      dollar: "3.00"
+    }
+  },
+  "2": {
+    gambarproduk: {
+      url: "https://c4.wallpaperflare.com/wallpaper/757/911/790/women-anime-girls-brunette-cat-wallpaper-preview.jpg"
+    },
+    produk: {
+      nama: "Manga"
+    },
+    harga: {
+      Rp: "70.000",
+      dollar: "3.99"
+    }
+  },
+"3": {
+    gambarproduk: {
+      url: "https://w7.pngwing.com/pngs/624/612/png-transparent-blend-s-anime-manga-anime-child-face-black-hair-thumbnail.png"
+    },
+    produk: {
+      nama: "Sepatu"
+    },
+    harga: {
+      Rp: "1999",
+      dollar: "1.5"
+    }
+  },
+  "4": {
+    gambarproduk: {
+      url: "https://w7.pngwing.com/pngs/624/612/png-transparent-blend-s-anime-manga-anime-child-face-black-hair-thumbnail.png"
+    },
+    produk: {
+      nama: "Sepatu1"
+    },
+    harga: {
+      Rp: "2999",
+      dollar: "1.8"
+    }
+  }
+};
+var listProduk = {
+    html: `<input type="radio" id="produk1" name="produk" value="1" checked>
+            <label for="produk1">${produk[1].produk.nama}</label>
+            <input type="radio" id="produk2" name="produk" value="2">
+            <label for="produk2">${produk[2].produk.nama}</label>
+            <input type="radio" id="produk3" name="produk" value="3">
+            <label for="produk3">${produk[3].produk.nama}</label> 
+            <input type="radio" id="produk4" name="produk" value="4">
+            <label for="produk4">${produk[4].produk.nama}</label>`
+};
+beliProduk();
+var urlproduk = window.location.href;
+document.getElementById('urlWebpembeli').value = urlproduk;
+</script>
+
+</body>
+</html>
